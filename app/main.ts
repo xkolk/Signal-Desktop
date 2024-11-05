@@ -1708,29 +1708,9 @@ function getSQLKey(): string {
 
   update = true;
   
-  /* if (!update) {
-    return key;
-  }
-
-   if (isEncryptionAvailable) {
-    getLogger().info('getSQLKey: updating encrypted key in the config');
-    const encrypted = safeStorage.encryptString(key).toString('hex');
-    userConfig.set('encryptedKey', encrypted);
-    userConfig.set('key', undefined);
-
-    if (isLinux && safeStorageBackend) {
-      getLogger().info(
-        `getSQLKey: saving safeStorageBackend: ${safeStorageBackend}`
-      );
-      userConfig.set('safeStorageBackend', safeStorageBackend);
-    }
-  } else { */
-  
   getLogger().info('getSQLKey: updating plaintext key in the config');
   userConfig.set('key', key);
   userConfig.set('encryptedKey', undefined);
-  
-  /* } */
 
   return key;
 }
