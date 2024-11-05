@@ -1675,7 +1675,6 @@ function getSQLKey(): string {
     if (!isEncryptionAvailable) {
       throw new Error("Can't decrypt database key");
     }
-
     getLogger().info('getSQLKey: decrypting key');
     const encrypted = Buffer.from(modernKeyValue, 'hex');
     key = safeStorage.decryptString(encrypted);
@@ -1685,7 +1684,7 @@ function getSQLKey(): string {
     getLogger().warn("getSQLKey: got key from config, but it wasn't a string");
     key = generateSQLKey();
   }
-  
+
   getLogger().info('getSQLKey: updating plaintext key in the config');
   userConfig.set('key', key);
   userConfig.set('encryptedKey', undefined);
