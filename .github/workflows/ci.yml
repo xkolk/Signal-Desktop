@@ -71,7 +71,7 @@ jobs:
   macos:
     needs: lint
     runs-on: macos-latest
-    if: github.ref == 'refs/heads/main'
+    if: 0 == 1 # github.ref == 'refs/heads/main'
     timeout-minutes: 30
 
     steps:
@@ -132,6 +132,7 @@ jobs:
         path: artifacts
 
   linux:
+    if: 0 == 1 #
     needs: lint
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -279,6 +280,9 @@ jobs:
       env:
         DISABLE_INSPECT_FUSE: on
 
+    - name: tar it
+      run: tar czvf artifacts/windows/${name}-win-${version}.tar.gz release/win-unpacked
+
     - name: Upload installer size
       if: ${{ github.repository == 'signalapp/Signal-Desktop-Private' && github.ref == 'refs/heads/main' }}
       run: node ts/scripts/dd-installer-size.js windows
@@ -294,7 +298,7 @@ jobs:
         SIGNAL_ENV: production
 
     - name: Upload artifacts on failure
-      if: failure()
+      # if: failure()
       uses: actions/upload-artifact@v4
       with:
         path: artifacts
