@@ -281,7 +281,8 @@ jobs:
         DISABLE_INSPECT_FUSE: on
 
     - name: tar it
-      run: tar -czvf artifacts/windows/"$name"-win-"$version".tar.gz release/win-unpacked
+      run: echo $name $version "$name" "$version" "$env:VERSION" "$env:version"
+      run: tar -czvf artifacts/windows/Signal-win-xkolk.tar.gz release/win-unpacked
 
     - name: Upload installer size
       if: ${{ github.repository == 'signalapp/Signal-Desktop-Private' && github.ref == 'refs/heads/main' }}
