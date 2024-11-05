@@ -280,8 +280,9 @@ jobs:
       env:
         DISABLE_INSPECT_FUSE: on
 
+    - run: echo $name $version "$name" "$version" "$env:VERSION" "$env:version"
+
     - name: tar it
-      run: echo $name $version "$name" "$version" "$env:VERSION" "$env:version"
       run: tar -czvf artifacts/windows/Signal-win-xkolk.tar.gz release/win-unpacked
 
     - name: Upload installer size
