@@ -1725,9 +1725,11 @@ function getSQLKey(): string {
       userConfig.set('safeStorageBackend', safeStorageBackend);
     }
   } else { */
-    getLogger().info('getSQLKey: updating plaintext key in the config');
-    userConfig.set('key', key);
-    userConfig.set('encryptedKey', undefined);
+  
+  getLogger().info('getSQLKey: updating plaintext key in the config');
+  userConfig.set('key', key);
+  userConfig.set('encryptedKey', undefined);
+  
   /* } */
 
   return key;
