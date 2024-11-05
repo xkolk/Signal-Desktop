@@ -1640,7 +1640,6 @@ function generateSQLKey(): string {
 }
 
 function getSQLKey(): string {
-  let update = false;
   const isLinux = OS.isLinux();
   const legacyKeyValue = userConfig.get('key');
   const modernKeyValue = userConfig.get('encryptedKey');
@@ -1680,37 +1679,17 @@ function getSQLKey(): string {
     getLogger().info('getSQLKey: decrypting key');
     const encrypted = Buffer.from(modernKeyValue, 'hex');
     key = safeStorage.decryptString(encrypted);
-
-    if (legacyKeyValue != null) {
-      getLogger().info('getSQLKey: removing legacy key');
-      userConfig.set('key', undefined);
-    }
-
-    if (isLinux && previousBackend == null) {
-      getLogger().info(
-        `getSQLKey: saving safeStorageBackend: ${safeStorageBackend}`
-      );
-      userConfig.set('safeStorageBackend', safeStorageBackend);
-    }
   } else if (typeof legacyKeyValue === 'string') {
     key = legacyKeyValue;
-    update = isEncryptionAvailable;
-    if (update) {
-      getLogger().info('getSQLKey: migrating key');
-    } else {
-      getLogger().info('getSQLKey: using legacy key');
-    }
   } else {
     getLogger().warn("getSQLKey: got key from config, but it wasn't a string");
     key = generateSQLKey();
-    update = true;
   }
-
-  update = true;
   
   getLogger().info('getSQLKey: updating plaintext key in the config');
   userConfig.set('key', key);
   userConfig.set('encryptedKey', undefined);
+  userConfig.set('safeStorageBackend', undefined);
 
   return key;
 }
